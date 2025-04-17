@@ -112,7 +112,7 @@ if menu == "Визуализации сетки":
 	
 	"""
 	
-	tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Профиль 1, сетка 1", "Профиль 1, сетка 2", "Профиль 1, сетка 3", "Профиль 2, сетка 1", "Профиль 2, сетка 2", "Профиль 3, сетка 1"])
+	tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Профиль 1, сетка 1", "Профиль 1, сетка 2", "Профиль 1, сетка 3", "Профиль 2, сетка 4", "Профиль 2, сетка 5", "Профиль 3, сетка 6"])
 
 	with tab1: 
 		st.image("pages/figs/mesh1.png", use_container_width=True)
@@ -127,7 +127,7 @@ if menu == "Визуализации сетки":
 	with tab6: 
 		st.image("pages/figs/mesh6.png", use_container_width=True)
 		
-	tab1c, tab2c, tab3c, tab4c, tab5c, tab6c = st.tabs(["Профиль 1, сетка 1", "Профиль 1, сетка 2", "Профиль 1, сетка 3", "Профиль 2, сетка 1", "Профиль 2, сетка 2", "Профиль 3, сетка 1"])
+	tab1c, tab2c, tab3c, tab4c, tab5c, tab6c = st.tabs(["Профиль 1, сетка 1", "Профиль 1, сетка 2", "Профиль 1, сетка 3", "Профиль 2, сетка 4", "Профиль 2, сетка 5", "Профиль 3, сетка 6"])
 
 	with tab1c: 
 		st.image("pages/figs/mesh1c.png", use_container_width=True)
