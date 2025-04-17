@@ -64,7 +64,7 @@ if menu == "Вариационная формулировка":
    **Пространство функций:**
 
    $\begin{aligned}
-   V = \{ v \in H^1(\Omega) \ | \ v(\bm x) = x_1, \ \bm x \in \Gamma_1 \cup \Gamma_2, \ v(\bm x) = \gamma,  \ \bm x \in \Gamma_3 \}
+   V = \{ v \in H^1(\Omega) \ | \ \psi(\bm x) = x_1, \ \bm x \in \Gamma_1 \cup \Gamma_2, \ \psi(\bm x) = \gamma,  \ \bm x \in \Gamma_3 \}
    \end{aligned}$
 
    **Конечно-элементная реализация:**
