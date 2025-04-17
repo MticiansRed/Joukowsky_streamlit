@@ -71,10 +71,10 @@ if menu == "Фрагменты кода":
     print(f"Число узлов сетки: {n_v}")
     print(f"Число искомых дискретных значений: {n_d}")
 
-    gamma1_0 = 0.00 # профиль 1 угол атаки 0
-    gamma2_0 = -0.232 #профиль 2 угол атаки 0
-    gamma2_15 = -0.962 #профиль 2 угол атаки 15
-    gamma3_20 = -1.431 #профиль 3 угол атаки 20
+    gamma1_0 = 0.00 # Профиль 1 угол атаки 0
+    gamma2_0 = -0.133 # Профиль 2 угол атаки 0
+    gamma2_15 = -0.863 # Профиль 2 угол атаки 15
+    gamma3_20 = -1.228 # Профиль 3 угол атаки 20
 
     gamma = gamma3_20 # Выбираем нужную константу в зависимости от профиля
     """ 
@@ -99,8 +99,8 @@ if menu == "Фрагменты кода":
     """   
     code = """     
     # Условия на входе в канал
-    u_l = Expression("x[1]", degree=deg)
-    u_r = Expression("x[1]", degree=deg)
+    u_l = Expression("x[1]", degree=deg)+h # Левая полуокружность #x[1]+h 
+    u_r = Expression("x[1]", degree=deg)+h # Правая полуокружность #x[1]+h 
 
     # Граничные условия
     bcs1 = [DirichletBC(V, u_l, boundaries, 1),
@@ -193,8 +193,9 @@ if menu == "Визуализации решений":
 
     with tab1:
         
-        div = st.selectbox("Разделений", [12, 48, 196], key="tab1_div")
-        deg = st.selectbox("Степень полинома", [1, 2, 3], key="tab1_deg")
+        div = st.selectbox("Число разбиений сетки:", [12, 48, 196], key="tab1_div")
+        deg = st.selectbox("Степень аппроксимирующих полиномов:", [1, 2, 3], key="tab1_deg")
+        angle = st.selectbox("Угол атаки:", [0], key="tab1_angle")
         
         img1_path = os.path.join(IMAGE_DIR, f"profile1_1_div{div}_deg{deg}.png")
         img2_path = os.path.join(IMAGE_DIR, f"profile1_2_div{div}_deg{deg}.png")
@@ -204,9 +205,9 @@ if menu == "Визуализации решений":
 
     with tab2:
         
-        div = st.selectbox("Разделений", [196], key="tab2_div")
-        deg = st.selectbox("Степень полинома", [1, 2, 3], key="tab2_deg")
-        angle = st.selectbox("Угол атаки", [0, 15], key="tab2_angle")
+        div = st.selectbox("Число разбиений сетки:", [196], key="tab2_div")
+        deg = st.selectbox("Степень аппроксимирующих полиномов:", [1, 2, 3], key="tab2_deg")
+        angle = st.selectbox("Угол атаки:", [0, 15], key="tab2_angle")
         
         img1_path = os.path.join(IMAGE_DIR, f"profile2_1_div{div}_deg{deg}_angle{angle}.png")
         img2_path = os.path.join(IMAGE_DIR, f"profile2_2_div{div}_deg{deg}_angle{angle}.png")
@@ -216,7 +217,9 @@ if menu == "Визуализации решений":
 
     with tab3:
         
-        deg = st.selectbox("Степень полинома", [1, 2, 3], key="tab3_deg")
+        div = st.selectbox("Число разбиений сетки:", [196], key="tab3_div")
+        deg = st.selectbox("Степень аппроксимирующих полиномов:", [1, 2, 3], key="tab3_deg")
+        angle = st.selectbox("Угол атаки:", [20], key="tab3_angle")
         
         img1_path = os.path.join(IMAGE_DIR, f"profile3_1_deg{deg}.png")
         img2_path = os.path.join(IMAGE_DIR, f"profile3_2_deg{deg}.png")
@@ -235,60 +238,69 @@ if menu == "Расчет циркуляции":
     
     def format_circulation(value):
         return fr"""
-        Точное значение: $\Gamma = {value}$
+        Описание таблицы:  
+        Сетка (номер сетки $ - $ число узлов)  
+        p $ - $ степень аппроксимирующих полиномов  
+        
+        Точное значение циркуляции: $\Gamma = {value:.5e}$
         """
     
     with tab1:
 
         data = {
-            "Число узлов": ["752", "1794", "4818"],
+            "Сетка": ["1 - 752", "2 - 1794", "3 - 4818"],
             "p = 1": ["5.44122e-04", "1.38165e-04", "1.26041e-04"],
             "p = 2": ["1.47168e-04", "8.68322e-05", "2.60052e-05"],
             "p = 3": ["8.30589e-05", "3.77206e-05", "-3.54880e-07"]      
         }
         df = pd.DataFrame(data)
 
-        st.dataframe(df, hide_index=True, width = 1000)
-        gamma = 0.0
-        st.markdown(format_circulation(gamma), unsafe_allow_html=True)
+        st.table(df)
+        r"""
+        Описание таблицы:  
+        Сетка (номер сетки $ - $ число узлов)  
+        p $ - $ степень аппроксимирующих полиномов  
+        
+        Точное значение циркуляции: $\Gamma = 0$
+        """    
         
     with tab2:
         
-        deg = st.selectbox("Угол атаки", [0, 15], key="tab2_deg")
+        deg = st.selectbox("Угол атаки:", [0, 15], key="tab2_deg")
         
         if deg == 0:
             data = {
-                "Число узов": ["5007"],
+                "Сетка": ["4 - 5007"],
                 "p = 1": ["-6.54220e-01"],
                 "p = 2": ["-6.58311e-01"],
                 "p = 3": ["-6.55881e-01"]      
             }
-            gamma = -0.659578545986082
+            gamma = -6.59579e-01
         else:  
             data = {
-                "Число узлов": ["5023"],
+                "Сетка": ["5 - 5023"],
                 "p = 1": ["-2.29214e+00"],
                 "p = 2": ["-2.33769e+00"],
                 "p = 3": ["-2.34485e+00"]      
             }
-            gamma = -2.3442188464564166
+            gamma = -2.34422e+00
         
         df = pd.DataFrame(data)
-        st.dataframe(df, hide_index=True, width = 1000)
+        st.table(df)  
         st.markdown(format_circulation(gamma), unsafe_allow_html=True)  
         
     with tab3:
     
         data = {
-            "Сетка": ["5400"],
+            "Сетка": ["6 - 5400"],
             "p = 1": ["-3.58767e+00"],
             "p = 2": ["-3.64469e+00"],
             "p = 3": ["-3.64901e+00"]      
         }
         
         df = pd.DataFrame(data)
-        st.dataframe(df, hide_index=True, width = 1000)
-        gamma = -3.656345062256148
+        st.table(df) 
+        gamma = -3.65635e+00
         st.markdown(format_circulation(gamma), unsafe_allow_html=True)  
         
         
