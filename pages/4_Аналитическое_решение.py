@@ -563,5 +563,6 @@ if menu == "Решение в Python":
 		#c1, c2, = st.columns([5,1])
 		c1.pyplot(fig)
 	"""
-	
-	st.code(code, language="python")
+	st.button("Показать код")
+	if st.button:
+		st.code(code, language="python")
