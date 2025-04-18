@@ -399,11 +399,9 @@ if menu == "Решение в Python":
 			print(z)
 			return z
 		def inverse(self, z):
-			#zmc = 1j*np.sqrt(self.c-z)*np.sqrt(self.c+z) !!! Correct upper part!
-			#zmc = np.sqrt(z-self.c)*np.sqrt(z+self.c) !!! Another good one!
 			zmc = 1j*np.sqrt(self.c-z)*np.sqrt(self.c+z)
 			t = (z + zmc - self.t_0)
-			t = np.where(np.real(t)**2+np.imag(t)**2>=self.a**2,  (z + zmc - self.t_0), (z - zmc - self.t_0)) #??? why this even works???
+			t = np.where(np.real(t)**2+np.imag(t)**2>=self.a**2,  (z + zmc - self.t_0), (z - zmc - self.t_0))
 			print("Inverse Joukowsky transform (z -> t) result t: ")
 			print(t)
 			return  t
@@ -495,7 +493,6 @@ if menu == "Решение в Python":
 		
 		#---Initilizing physical plane z---
 		Z_mesh = T1_mesh
-		#Z_mesh = T1_mesh+t_0 #z plane has same origin as t ??? why adding t_0 is not needed???
 		Z_xmesh = np.real(Z_mesh)
 		Z_ymesh = np.imag(Z_mesh)
 		
